@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экзамен ЦГБ№7</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #f4f6f8; padding: 20px; display: flex; justify-content: center; }
+        .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 600px; width: 100%; }
+        h1 { font-size: 22px; margin-bottom: 20px; }
+        .question { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .q-text { font-weight: 600; margin-bottom: 10px; }
+        .option { display: block; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; }
+        .option:hover { background: #f0f4f8; }
+        .btn { background: #2563eb; color: #fff; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 20px;}
+        .btn:hover { background: #1d4ed8; }
+        .result { text-align: center; display: none; }
+        .score { font-size: 48px; font-weight: bold; margin: 10px 0; }
+        .pass { color: #16a34a; }
+        .fail { color: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="card" id="start-screen">
+    <h1>Система обучения ЦГБ№7</h1>
+    <p>Выберите экзамен:</p>
+    <button class="btn" onclick="startExam('ustav')">Экзамен по Уставу</button>
+    <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="startExam('pmp')">Экзамен по ПМП</button>
+</div>
+
+<div class="card" id="exam-screen" style="display: none;">
+    <h1 id="exam-title">Экзамен</h1>
+    <form id="exam-form"></form>
+    <button class="btn" onclick="submitExam()">Завершить</button>
+</div>
+
+<div class="card result" id="result-screen">
+    <h1>Результат</h1>
+    <div class="score" id="score-display">0%</div>
+    <p id="score-text">Правильных ответов: 0 из 0</p>
+    <p id="verdict-text"></p>
+    <button class="btn" onclick="location.reload()">На главную</button>
+</div>
+
+<script>
+    // ТУТ ТВОИ ВОПРОСЫ. Формат: correct - это индекс правильного ответа (с 0!)
+    const questionsDB = {
+        ustav: [
+            {
+                text: "Кто является высшим руководством в больнице?",
+                options: ["Главврач и заместитель главного врача", "Заведующий и зам", "Ординатор"],
+                correct: 0
+            },
+            {
+                text: "В какое время проходит обед?",
+                options: ["12:00-13:00", "13:00-14:00", "14:00-15:00"],
+                correct: 1
+            }
+            // ... добавляй остальные вопросы сюда
+        ],
+        pmp: [
+            {
+                text: "Что делать при артериальном кровотечении?",
+                options: ["Наложить жгут", "Обработать перекисью", "Дать обезболивающее"],
+                correct: 0
+            }
+            // ... вопросы по ПМП
+        ]
+    };
+
+    let currentQuestions = [];
+    let currentExamType = "";
+
+    function startExam(type) {
+        currentExamType = type;
+        currentQuestions = questionsDB[type];
+        
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('exam-screen').style.display = 'block';
+        document.getElementById('exam-title').innerText = type === 'ustav' ? 'Экзамен по Уставу' : 'Экзамен по ПМП';
+
+        const form = document.getElementById('exam-form');
+        form.innerHTML = ''; // Очистка
+
+        // Перемешиваем вопросы (опционально)
+        // currentQuestions.sort(() => Math.random() - 0.5);
+
+        currentQuestions.forEach((q, index) => {
+            let html = `<div class="question"><div class="q-text">${index + 1}. ${q.text}</div>`;
+            q.options.forEach((opt, optIndex) => {
+                html += `<label class="option"><input type="radio" name="q${index}" value="${optIndex}" required> ${opt}</label>`;
+            });
+            html += `</div>`;
+            form.innerHTML += html;
+        });
+    }
+
+    function submitExam() {
+        const form = document.getElementById('exam-form');
+        if (!form.checkValidity()) {
+            alert("Ответьте на все вопросы!");
+            return;
+        }
+
+        let correctCount = 0;
+        currentQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`).value;
+            if (parseInt(selected) === q.correct) {
+                correctCount++;
+            }
+        });
+
+        const total = currentQuestions.length;
+        const score = Math.round((correctCount / total) * 100);
+        const passed = score >= 70;
+
+        document.getElementById('exam-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.innerText = score + '%';
+        scoreDisplay.className = 'score ' + (passed ? 'pass' : 'fail');
+        
+        document.getElementById('score-text').innerText = `Правильных ответов: ${correctCount} из ${total}`;
+        document.getElementById('verdict-text').innerText = passed ? 'СДАНО' : 'НЕ СДАНО';
+        document.getElementById('verdict-text').style.color = passed ? '#16a34a' : '#dc2626';
+        document.getElementById('verdict-text').style.fontWeight = 'bold';
+    }
+</script>
+
+</body>
+</html>
