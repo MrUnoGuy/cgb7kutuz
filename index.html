@@ -22,12 +22,44 @@
 </head>
 <body>
 
-<div class="card" id="start-screen">
-    <h1>Система обучения ЦГБ№7</h1>
-    <p>Выберите экзамен:</p>
-    <button class="btn" onclick="startExam('ustav')">Экзамен по Уставу</button>
-    <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="startExam('pmp')">Экзамен по ПМП и поставкам</button>
-    <button class="btn" style="background: #64748b; margin-top: 10px;" onclick="window.location.href='lecture.html'">Прочитать лекцию</button>
+﻿<div class="card" id="start-screen">
+    <h1 style="text-align: center; color: #2563eb;">Система обучения ЦГБ№7</h1>
+    <p style="text-align: center; color: #64748b; margin-bottom: 30px;">Выберите раздел для прохождения аттестации</p>
+    
+    <!-- Поля для ввода данных (общие для всех) -->
+    <div class="input-group" style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">Никнейм (OOC):</label>
+        <input type="text" id="input-nickname" placeholder="Например: AspenRules" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-top: 5px;">
+    </div>
+    <div class="input-group" style="margin-bottom: 30px;">
+        <label style="font-weight: bold;">Имя Фамилия | Статик (IC):</label>
+        <input type="text" id="input-static" placeholder="Иван Иванов | 123-456" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-top: 5px;">
+    </div>
+
+    <!-- Сетка для карточек -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        
+        <!-- Блок Устава -->
+        <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center;">
+            <h2 style="color: #1e40af; margin-top: 0;">Устав ЦГБ№7</h2>
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Изучите правила больницы и проверьте свои знания.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn" style="background: #64748b;" onclick="window.location.href='lecture_ustav.html'">📖 Читать лекцию</button>
+                <button class="btn" onclick="startExam('ustav')">📝 Сдать экзамен</button>
+            </div>
+        </div>
+
+        <!-- Блок ПМП -->
+        <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 20px; text-align: center;">
+            <h2 style="color: #15803d; margin-top: 0;">ПМП (Первая помощь)</h2>
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Алгоритмы оказания помощи до приезда врачей.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn" style="background: #16a34a;" onclick="window.location.href='lecture_pmp.html'">📖 Читать лекцию</button>
+                <button class="btn" style="background: #16a34a;" onclick="startExam('pmp')">📝 Сдать экзамен</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <div class="card" id="exam-screen" style="display: none;">
