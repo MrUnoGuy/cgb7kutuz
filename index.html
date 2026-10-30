@@ -223,45 +223,37 @@
 
     function startExam(type) {
     // Берем только статик
-        const staticInfo = document.getElementById('input-static').value.trim();
+    const staticInfo = document.getElementById('input-static').value.trim();
 
-    // Проверяем, что он введен
-        if (!staticInfo) {
-            alert("Пожалуйста, введите Имя Фамилия | Статик перед началом!");
-            return;
+    // Проверяем только статик
+    if (!staticInfo) {
+        alert("Пожалуйста, введите Имя Фамилия | Статик перед началом!");
+        return;
     }
 
-    // Записываем в пользователя
-        currentUser.static = staticInfo;
-        currentExamType = type;
-        currentQuestions = questionsDB[type];
+    currentUser.static = staticInfo;
+    currentExamType = type;
+    currentQuestions = questionsDB[type];
     
-    // Скрываем главную и показываем экзамен
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('exam-screen').style.display = 'block';
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('exam-screen').style.display = 'block';
     
-        const examTitle = type === 'ustav' ? 'Экзамен по Уставу' : 'Экзамен по ПМП';
-        document.getElementById('exam-title').innerText = examTitle;
-    
-    // Выводим статик на странице экзамена
-        document.getElementById('user-info').innerHTML = `<b>Сотрудник:</b> ${staticInfo}`;
+    const examTitle = type === 'ustav' ? 'Экзамен по Уставу' : 'Экзамен по ПМП';
+    document.getElementById('exam-title').innerText = examTitle;
+    document.getElementById('user-info').innerHTML = `<b>Сотрудник:</b> ${staticInfo}`;
 
-    // ... (остальной код генерации вопросов)
-}
+    const form = document.getElementById('exam-form');
+    form.innerHTML = ''; 
 
-        // Перемешиваем вопросы (опционально)
-        // currentQuestions.sort(() => Math.random() - 0.5);
-
-        currentQuestions.forEach((q, index) => {
-            let html = `<div class="question"><div class="q-text">${index + 1}. ${q.text}</div>`;
-            q.options.forEach((opt, optIndex) => {
-                html += `<label class="option"><input type="radio" name="q${index}" value="${optIndex}" required> ${opt}</label>`;
-            });
-            html += `</div>`;
-            form.innerHTML += html;
+    currentQuestions.forEach((q, index) => {
+        let html = `<div class="question"><div class="q-text">${index + 1}. ${q.text}</div>`;
+        q.options.forEach((opt, optIndex) => {
+            html += `<label class="option"><input type="radio" name="q${index}" value="${optIndex}" required> ${opt}</label>`;
         });
-    }
-
+        html += `</div>`;
+        form.innerHTML += html;
+    });
+}
     function submitExam() {
         const form = document.getElementById('exam-form');
         if (!form.checkValidity()) {
