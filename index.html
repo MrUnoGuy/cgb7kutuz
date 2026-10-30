@@ -72,6 +72,7 @@
 <div class="card result" id="result-screen">
     <h1>Результат</h1>
     <div class="score" id="score-display">0%</div>
+    <p id="result-user" style="font-size: 18px; margin-bottom: 20px; color: #475569;"></p>
     <p id="score-text">Правильных ответов: 0 из 0</p>
     <p id="verdict-text"></p>
     <button class="btn" onclick="location.reload()">На главную</button>
@@ -284,6 +285,7 @@
 
         const scoreDisplay = document.getElementById('score-display');
         scoreDisplay.innerText = score + '%';
+        document.getElementById('result-user').innerHTML = `Сотрудник: <b>${currentUser.static}</b>`;
         scoreDisplay.className = 'score ' + (passed ? 'pass' : 'fail');
         
         document.getElementById('score-text').innerText = `Правильных ответов: ${correctCount} из ${total}`;
