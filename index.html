@@ -280,6 +280,12 @@
         const score = Math.round((correctCount / total) * 100);
         const passed = score >= 70;
 
+        // Определяем название экзамена
+        const examName = currentExamType === 'ustav' ? 'Устав' : 'ПМП';
+
+        // Выводим его в заголовок
+        document.getElementById('result-title').innerText = `Результат: Экзамен по ${examName}`;
+
         document.getElementById('exam-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
 
