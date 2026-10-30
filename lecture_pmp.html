@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лекция по ПМП | ЦГБ№7</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: #f4f6f8; 
+            color: #1f2933; 
+            line-height: 1.6; 
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        h1 { 
+            color: #16a34a; /* Зеленый цвет для ПМП */
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 10px; 
+            margin-bottom: 30px;
+        }
+        h2 { 
+            color: #15803d; 
+            margin-top: 30px; 
+            font-size: 20px;
+            background: #f0fdf4; /* Светло-зеленый фон */
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 4px solid #16a34a;
+        }
+        h3 { 
+            color: #334155; 
+            margin-top: 20px; 
+            font-size: 18px; 
+        }
+        p { margin-bottom: 15px; }
+        ul { margin-bottom: 15px; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        
+        /* Блок для важных предупреждений (красный) */
+        .alert {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .alert strong { color: #b91c1c; }
+
+        /* Кнопка "Назад" */
+        .btn-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #16a34a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .btn-back:hover { text-decoration: underline; }
+
+        /* Оглавление */
+        .toc {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .toc ul { list-style-type: none; padding-left: 0; }
+        .toc li { margin-bottom: 5px; }
+        .toc a { color: #16a34a; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="btn-back">← Вернуться на главную</a>
+    
+    <h1>Вводная лекция по ПМП (Первой помощи)</h1>
+
+    <div class="toc">
+        <strong>Оглавление:</strong>
+        <ul>
+            <li><a href="#intro">1. Вступление</a></li>
+            <li><a href="#algorithms">2. Базовые алгоритмы</a></li>
+            <li><a href="#bleeding">3. Кровотечения</a></li>
+            <li><a href="#fractures">4. Переломы и иммобилизация</a></li>
+            <li><a href="#cpr">5. Сердечно-легочная реанимация (СЛР)</a></li>
+        </ul>
+    </div>
+
+    <h2 id="intro">1. Вступление</h2>
+    <p>Каждый сотрудник ЦГБ№7, независимо от должности, обязан уметь оказывать первую медицинскую помощь (ПМП) до приезда профильных специалистов или бригады скорой помощи.</p>
+    <p>В этом разделе мы разберем базовые алгоритмы, которые помогут спасти жизнь пациенту в критической ситуации.</p>
+    
+    <div class="alert">
+        <strong>Важно:</strong> Оказывая помощь, вы не должны рисковать собственной жизнью. Убедитесь, что место безопасно, прежде чем подходить к пострадавшему.
+    </div>
+
+    <h2 id="algorithms">2. Базовые алгоритмы</h2>
+    <p>При обнаружении пострадавшего ваши действия должны быть четкими и быстрыми:</p>
+    <ul>
+        <li>Оценить обстановку (нет ли угрозы для вас и пострадавшего).</li>
+        <li>Проверить наличие сознания и дыхания.</li>
+        <li>Вызвать скорую помощь (или сообщить по рации).</li>
+        <li>Приступить к оказанию первой помощи по показаниям.</li>
+    </ul>
+
+    <h2 id="bleeding">3. Кровотечения</h2>
+    <p>Кровотечения делятся на несколько видов, и для каждого есть свой метод остановки.</p>
+    
+    <h3>Артериальное кровотечение (алая кровь, бьет фонтаном):</h3>
+    <ul>
+        <li>Необходимо немедленно наложить <strong>жгут</strong> выше места ранения.</li>
+        <li>Обязательно зафиксировать время наложения жгута (записка или маркер на коже).</li>
+    </ul>
+
+    <h3>Венозное кровотечение (темная кровь, льется спокойно):</h3>
+    <ul>
+        <li>Наложить <strong>давящую повязку</strong> на место ранения.</li>
+    </ul>
+
+    <div class="alert">
+        <strong>Запрещено:</strong> Оставлять жгут на конечности более чем на 1 час в теплое время и 30 минут в холодное время (зимой).
+    </div>
+
+    <h2 id="fractures">4. Переломы и иммобилизация</h2>
+    <p>При переломах главная задача — обездвижить поврежденную конечность (иммобилизация), чтобы костные обломки не повредили сосуды и нервы.</p>
+    <ul>
+        <li>Наложить шину (используя подручные средства: доски, ветки, картон).</li>
+        <li>Зафиксировать минимум два сустава: выше и ниже перелома.</li>
+        <li>При открытом переломе сначала наложить стерильную повязку на рану, затем шину.</li>
+    </ul>
+
+    <h2 id="cpr">5. Сердечно-легочная реанимация (СЛР)</h2>
+    <p>Проводится при отсутствии у пострадавшего дыхания и пульса.</p>
+    <ul>
+        <li>Уложить пострадавшего на твердую ровную поверхность.</li>
+        <li>Непрямой массаж сердца: 30 нажатий на грудную клетку (глубина 5-6 см).</li>
+        <li>Искусственное дыхание: 2 вдоха (если вы обучены этому методу).</li>
+        <li>Повторять цикл 30:2 до приезда скорой.</li>
+    </ul>
+
+    <br><br>
+    <div style="text-align: center;">
+        <a href="index.html" class="btn" style="background: #16a34a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Перейти к экзамену по ПМП</a>
+    </div>
+</div>
+
+</body>
+</html>
