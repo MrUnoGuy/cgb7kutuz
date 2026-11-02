@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты экзаменов</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #f4f6f8; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: #2563eb; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .pass { color: #16a34a; font-weight: bold; }
+        .fail { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Результаты сдачи экзаменов ЦГБ№7</h2>
+    <table id="results-table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Сотрудник</th>
+                <th>Экзамен</th>
+                <th>Правильно</th>
+                <th>Всего</th>
+                <th>Процент</th>
+                <th>Вердикт</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="7" style="text-align:center;">Загрузка данных...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        // ТУТ ВСТАВЬ СВОЮ ССЫЛКУ НА ВЕБ-ПРИЛОЖЕНИЕ
+        const SCRIPT_URL = "ТВОЯ_ССЫЛКА_ИЗ_ШАГА_1"; 
+
+        fetch(SCRIPT_URL)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#results-table tbody');
+                tbody.innerHTML = '';
+                
+                // Пропускаем первую строку (заголовки)
+                for (let i = 1; i < data.length; i++) {
+                    const row = data[i];
+                    const tr = document.createElement('tr');
+                    
+                    // Форматируем дату (может прийти как ISO строка)
+                    const dateStr = row[0] ? new Date(row[0]).toLocaleString('ru-RU') : '';
+                    const verdictClass = row[6] === 'СДАНО' ? 'pass' : 'fail';
+                    
+                    tr.innerHTML = `
+                        <td>${dateStr}</td>
+                        <td>${row[1]}</td>
+                        <td>${row[2]}</td>
+                        <td>${row[3]}</td>
+                        <td>${row[4]}</td>
+                        <td>${row[5]}</td>
+                        <td class="${verdictClass}">${row[6]}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            })
+            .catch(err => {
+                document.querySelector('#results-table tbody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Ошибка загрузки данных</td></tr>`;
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
