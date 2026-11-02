@@ -35,6 +35,9 @@
         <a href="price.html" style="display: inline-block; padding: 10px 20px; background: #f59e0b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             💰 Посмотреть Ценовую Политику (ЦП)
         </a>
+        <a href="https://script.google.com/macros/s/AKfycbxDg-ZaLAKApaJAXkc68r2uVsk88XMr4RizwkGQFx7ru7Fhi4fByXYy99RNQbcBP6ElaA/exec" target="_blank" style="display: inline-block; padding: 10px 20px; background: #f59e0b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            📊 Посмотреть результаты
+        </a>
     </div>
     <!-- Сетка для карточек -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -79,6 +82,7 @@
 </div>
 
 <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDg-ZaLAKApaJAXkc68r2uVsk88XMr4RizwkGQFx7ru7Fhi4fByXYy99RNQbcBP6ElaA/exec"
     // ТУТ ТВОИ ВОПРОСЫ. Формат: correct - это индекс правильного ответа (с 0!)
     const questionsDB = {
         ustav: [
@@ -271,43 +275,55 @@
     });
 }
     function submitExam() {
-        const form = document.getElementById('exam-form');
-        if (!form.checkValidity()) {
-            alert("Ответьте на все вопросы!");
-            return;
-        }
-
-        let correctCount = 0;
-        currentQuestions.forEach((q, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`).value;
-            if (parseInt(selected) === q.correct) {
-                correctCount++;
-            }
-        });
-
-        const total = currentQuestions.length;
-        const score = Math.round((correctCount / total) * 100);
-        const passed = score >= 85;
-
-        // Определяем название экзамена
-        const examName = currentExamType === 'ustav' ? 'Устав' : 'ПМП';
-
-        // Выводим его в заголовок
-        document.getElementById('result-title').innerText = `Результат: Экзамен по ${examName}`;
-
-        document.getElementById('exam-screen').style.display = 'none';
-        document.getElementById('result-screen').style.display = 'block';
-
-        const scoreDisplay = document.getElementById('score-display');
-        scoreDisplay.innerText = score + '%';
-        document.getElementById('result-user').innerHTML = `Сотрудник: <b>${currentUser.static}</b>`;
-        scoreDisplay.className = 'score ' + (passed ? 'pass' : 'fail');
-        
-        document.getElementById('score-text').innerText = `Правильных ответов: ${correctCount} из ${total}`;
-        document.getElementById('verdict-text').innerText = passed ? 'СДАНО' : 'НЕ СДАНО';
-        document.getElementById('verdict-text').style.color = passed ? '#16a34a' : '#dc2626';
-        document.getElementById('verdict-text').style.fontWeight = 'bold';
+    const form = document.getElementById('exam-form');
+    if (!form.checkValidity()) {
+        alert("Ответьте на все вопросы!");
+        return;
     }
+
+    let correctCount = 0;
+    currentQuestions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`).value;
+        if (parseInt(selected) === q.correct) {
+            correctCount++;
+        }
+    });
+
+    const total = currentQuestions.length;
+    const score = Math.round((correctCount / total) * 100);
+    const passed = score >= 85;
+    const examName = currentExamType === 'ustav' ? 'Устав' : 'ПМП';
+
+    // --- ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ ---
+    const payload = {
+        user: currentUser.static,
+        examType: examName,
+        correct: correctCount,
+        total: total,
+        score: score,
+        passed: passed
+    };
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+    }).catch(err => console.error("Ошибка отправки:", err));
+    // -----------------------------------------
+
+    document.getElementById('result-title').innerText = `Результат: Экзамен по ${examName}`;
+    document.getElementById('exam-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
+
+    const scoreDisplay = document.getElementById('score-display');
+    scoreDisplay.innerText = score + '%';
+    document.getElementById('result-user').innerHTML = `Сотрудник: <b>${currentUser.static}</b>`;
+    scoreDisplay.className = 'score ' + (passed ? 'pass' : 'fail');
+    
+    document.getElementById('score-text').innerText = `Правильных ответов: ${correctCount} из ${total}`;
+    document.getElementById('verdict-text').innerText = passed ? 'СДАНО' : 'НЕ СДАНО';
+    document.getElementById('verdict-text').style.color = passed ? '#16a34a' : '#dc2626';
+    document.getElementById('verdict-text').style.fontWeight = 'bold';
+}
 </script>
 
 </body>
