@@ -292,7 +292,7 @@
 
     const total = currentQuestions.length;
     const score = Math.round((correctCount / total) * 100);
-    const passed = score >= 85;
+    const passed = score >= 101;
     const examName = currentExamType === 'ustav' ? 'Устав' : 'ПМП';
 
     // --- ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ ---
